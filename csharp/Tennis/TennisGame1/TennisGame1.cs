@@ -23,38 +23,43 @@ namespace Tennis
 
         public string GetScore()
         {
-            string output = "";
-
-            if (player1.Score == player2.Score)
+            if (PlayersAreTied())
             {
-                //draw game
-                return player1.Score < 3
-                    ? player1.GetScoreAsTerm() + "-All"
-                    : "Deuce";
+                return GetDrawResult();
             }
-            else if (player1.Score < 4 && player2.Score < 4)
+            else if (PlayersScoreBelowFour())
             {
-                //ongoing
-                output = player1.GetScoreAsTerm() + '-' + player2.GetScoreAsTerm();
+                return GetOngoingResult();
             }
             else
             {
-                //advantage or win
-                switch (player1.Score - player2.Score)
-                {
-                    case 1:
-                        return "Advantage player1";
-                    case -1:
-                        return "Advantage player2";
-                    case >= 2:
-                        return "Win for player1";
-                    default:
-                        return "Win for player2";
-                }
+                return GetAdvantageOrWinResult();
             }
-
-            return output;
         }
+
+        private bool PlayersAreTied() => player1.Score == player2.Score;
+
+        private bool PlayersScoreBelowFour() => player1.Score < 4 && player2.Score < 4;
+
+        private string GetOngoingResult() => $"{player1.GetScoreAsTerm()}-{player2.GetScoreAsTerm()}";
+
+        private string GetDrawResult() 
+            => player1.Score < 3
+                ? player1.GetScoreAsTerm() + "-All"
+                : "Deuce";
+
+        private string GetAdvantageOrWinResult() 
+            => ScoreDifferenceIsOne()
+                ? GetMessage("Advantage ")
+                : GetMessage("Win for ");
+
+        private string GetMessage(string messagePattern) 
+            => player1.Score > player2.Score
+                ? messagePattern + "player1"
+                : messagePattern + "player2";
+
+        private bool ScoreDifferenceIsOne() 
+            => player1.Score - player2.Score == 1 || player2.Score - player1.Score == 1;
     }
 }
 
