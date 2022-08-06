@@ -38,14 +38,9 @@ namespace Tennis
         {
             var score = "";
 
-            if (player1.Points == player2.Points && player1.Points < 3)
+            if (player1.Points == player2.Points)
             {
-                score = scoreTerms[player1.Points] + "-All";
-            }
-
-            if (player1.Points == player2.Points && player1.Points > 2)
-            {
-                return "Deuce";
+                return GetTiedScore();
             }
 
             if (player1.Points > 0 && player2.Points == 0)
@@ -120,7 +115,12 @@ namespace Tennis
             return score;
         }
 
-
+        private string GetTiedScore()
+        {
+            return player1.Points > 2
+                ? "Deuce"
+                : scoreTerms[player1.Points] + "-All";
+        }
     }
 }
 
