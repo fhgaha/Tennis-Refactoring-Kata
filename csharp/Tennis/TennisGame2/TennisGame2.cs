@@ -45,14 +45,14 @@ namespace Tennis
                 return "Win for player2";
             }
 
-            if (player2.Points > player1.Points && player1.Points >= 3)
-            {
-                score = "Advantage player2";
-            }
-
-            if (player1.Points > player2.Points && player2.Points >= 3)
+            if (player1.HasAdvantageOver(player2))
             {
                 score = "Advantage player1";
+            }
+
+            if (player2.HasAdvantageOver(player1))
+            {
+                score = "Advantage player2";
             }
 
             if (player2.Points > 0 && player2.Points < 4 && player1.Points == 0)
@@ -79,7 +79,7 @@ namespace Tennis
             return score;
         }
 
-        
+
 
         private string GetTiedScore()
         {

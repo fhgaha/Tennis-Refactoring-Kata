@@ -25,5 +25,6 @@ namespace Tennis.TennisGame2Folder
         {
             return Points >= 4 && opponent.Points >= 0 && (Points - opponent.Points) >= 2;
         }
+
     }
 }
