@@ -43,7 +43,7 @@ namespace Tennis
                 return GetTiedScore();
             }
 
-            if (player1.Points > 0 && player2.Points == 0)
+            if (player1.Points > 0 && player1.Points < 4 && player2.Points == 0)
             {
                 if (player1.Points == 1)
                     p1res = "Fifteen";
@@ -52,10 +52,10 @@ namespace Tennis
                 if (player1.Points == 3)
                     p1res = "Forty";
 
-                score = p1res + "-Love";
                 p2res = "Love";
+                score = scoreTerms[player1.Points] + "-Love";
             }
-            if (player2.Points > 0 && player1.Points == 0)
+            if (player2.Points > 0 && player2.Points < 4 && player1.Points == 0)
             {
                 if (player2.Points == 1)
                     p2res = "Fifteen";
@@ -65,7 +65,7 @@ namespace Tennis
                     p2res = "Forty";
 
                 p1res = "Love";
-                score = "Love-" + p2res;
+                score = "Love-" + scoreTerms[player2.Points];
             }
 
             if (player1.Points > player2.Points && player1.Points < 4)
@@ -78,7 +78,8 @@ namespace Tennis
                     p2res = "Fifteen";
                 if (player2.Points == 2)
                     p2res = "Thirty";
-                score = p1res + "-" + p2res;
+
+                score = scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
             }
             if (player2.Points > player1.Points && player2.Points < 4)
             {
@@ -90,7 +91,8 @@ namespace Tennis
                     p1res = "Fifteen";
                 if (player1.Points == 2)
                     p1res = "Thirty";
-                score = p1res + "-" + p2res;
+
+                score = scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
             }
 
             if (player1.Points > player2.Points && player2.Points >= 3)
