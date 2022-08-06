@@ -11,9 +11,14 @@ namespace Tennis.TennisGame2Folder
         public string Name { get; set; }
         public int Points { get; set; }
 
-        public bool HasAdvantageOver(Player player2)
+        public bool IsTiedWith(Player opponent)
         {
-            return Points > player2.Points && player2.Points >= 3;
+            return Points == opponent.Points;
+        }
+
+        public bool HasAdvantageOver(Player opponent)
+        {
+            return Points > opponent.Points && opponent.Points >= 3;
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Tennis
         {
             var score = "";
 
-            if (player1.Points == player2.Points)
+            if (player1.IsTiedWith(player2))
             {
                 return GetTiedScore();
             }
@@ -78,6 +78,7 @@ namespace Tennis
         }
 
         
+
 
         private string GetTiedScore()
         {
