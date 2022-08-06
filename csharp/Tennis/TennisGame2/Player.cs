@@ -20,5 +20,10 @@ namespace Tennis.TennisGame2Folder
         {
             return Points > opponent.Points && opponent.Points >= 3;
         }
+
+        public bool Wins(Player opponent)
+        {
+            return Points >= 4 && opponent.Points >= 0 && (Points - opponent.Points) >= 2;
+        }
     }
 }

@@ -35,12 +35,12 @@ namespace Tennis
         {
             var score = "";
 
-            if (player1.Points >= 4 && player2.Points >= 0 && (player1.Points - player2.Points) >= 2)
+            if (player1.Wins(player2))
             {
                 return "Win for player1";
             }
 
-            if (player2.Points >= 4 && player1.Points >= 0 && (player2.Points - player1.Points) >= 2)
+            if (player2.Wins(player1))
             {
                 return "Win for player2";
             }
@@ -78,6 +78,8 @@ namespace Tennis
 
             return score;
         }
+
+        
 
         private string GetTiedScore()
         {
