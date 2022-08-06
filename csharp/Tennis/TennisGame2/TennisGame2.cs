@@ -43,9 +43,9 @@ namespace Tennis
                 score = scoreTerms[player1.Points] + "-All";
             }
 
-            if (player1.Points > 2)
+            if (player1.Points == player2.Points && player1.Points > 2)
             {
-                score = "Deuce";
+                return "Deuce";
             }
 
             if (player1.Points > 0 && player2.Points == 0)
@@ -57,8 +57,8 @@ namespace Tennis
                 if (player1.Points == 3)
                     p1res = "Forty";
 
+                score = p1res + "-Love";
                 p2res = "Love";
-                score = p1res + "-" + p2res;
             }
             if (player2.Points > 0 && player1.Points == 0)
             {
@@ -70,7 +70,7 @@ namespace Tennis
                     p2res = "Forty";
 
                 p1res = "Love";
-                score = p1res + "-" + p2res;
+                score = "Love-" + p2res;
             }
 
             if (player1.Points > player2.Points && player1.Points < 4)
