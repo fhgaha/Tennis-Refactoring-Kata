@@ -37,15 +37,51 @@ namespace Tennis
             {
                 return GetTiedScore();
             }
-            else if (AnyPlayerPointsAboveFour())
+
+            if (player1.Wins(player2))
             {
-                return WinOrAdvantageScore();
+                return "Win for player1";
             }
-            else if (AnyPlayerPointsZero())
+
+            if (player2.Wins(player1))
             {
-                return LoveScore();
+                return "Win for player2";
             }
-            return DefaultScore();
+
+            if (player1.HasAdvantageOver(player2))
+            {
+                return "Advantage player1";
+            }
+
+            if (player2.HasAdvantageOver(player1))
+            {
+                return "Advantage player2";
+            }
+
+            return Other();
+        }
+
+        private string Other()
+        {
+            var score = "";
+
+            if (player1.HasZeroAndOpponentAhead(player2))
+            {
+                score = "Love-" + scoreTerms[player2.Points];
+            }
+
+            if (player2.HasZeroAndOpponentAhead(player1))
+            {
+                score = scoreTerms[player1.Points] + "-Love";
+            }
+
+            if (player1.AheadOfOpponentAndBelowFour(player2)
+                || player2.AheadOfOpponentAndBelowFour(player1))
+            {
+                score = scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
+            }
+
+            return score;
         }
 
         private string GetTiedScore()
@@ -53,50 +89,6 @@ namespace Tennis
             return player1.Points > 2
                 ? "Deuce"
                 : scoreTerms[player1.Points] + "-All";
-        }
-
-        private bool AnyPlayerPointsAboveFour()
-        {
-            return player1.Points >= 4 || player2.Points >= 4;
-        }
-
-        private string WinOrAdvantageScore()
-        {
-            if ((player1.Points - player2.Points) >= 2)
-            {
-                return "Win for player1";
-            }
-            else if ((player2.Points - player1.Points) >= 2)
-            {
-                return "Win for player2";
-            }
-
-            return AdvantageScore();
-        }
-        private bool AnyPlayerPointsZero()
-        {
-            return player1.Points == 0 || player2.Points == 0;
-        }
-
-        private string LoveScore()
-        {
-            return player1.Points > 0
-                && player1.Points < 4
-                && player2.Points == 0
-                ? scoreTerms[player1.Points] + "-Love"
-                : "Love-" + scoreTerms[player2.Points];
-        }
-
-        private string DefaultScore()
-        {
-            return scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
-        }
-
-        private string AdvantageScore()
-        {
-            return player1.Points > player2.Points && player2.Points >= 3 
-                ? "Advantage player1" 
-                : "Advantage player2";
         }
     }
 }
