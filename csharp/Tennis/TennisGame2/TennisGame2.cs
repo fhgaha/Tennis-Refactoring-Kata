@@ -33,7 +33,10 @@ namespace Tennis
 
         public string GetScore()
         {
-            var score = "";
+            if (player1.IsTiedWith(player2))
+            {
+                return GetTiedScore();
+            }
 
             if (player1.Wins(player2))
             {
@@ -47,39 +50,39 @@ namespace Tennis
 
             if (player1.HasAdvantageOver(player2))
             {
-                score = "Advantage player1";
+                return "Advantage player1";
             }
 
             if (player2.HasAdvantageOver(player1))
             {
-                score = "Advantage player2";
+                return "Advantage player2";
             }
 
-            if (player2.Points > 0 && player2.Points < 4 && player1.Points == 0)
+            return Other();
+        }
+
+        private string Other()
+        {
+            var score = "";
+
+            if (player1.HasZeroAndOpponentAhead(player2))
             {
                 score = "Love-" + scoreTerms[player2.Points];
             }
 
-            if (player1.Points > 0 && player1.Points < 4 && player2.Points == 0)
+            if (player2.HasZeroAndOpponentAhead(player1))
             {
                 score = scoreTerms[player1.Points] + "-Love";
             }
 
-            if (player1.Points > player2.Points && player1.Points < 4
-                || player2.Points > player1.Points && player2.Points < 4)
+            if (player1.AheadOfOpponentAndBelowFour(player2)
+                || player2.AheadOfOpponentAndBelowFour(player1))
             {
                 score = scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
             }
 
-            if (player1.IsTiedWith(player2))
-            {
-                return GetTiedScore();
-            }
-
             return score;
         }
-
-
 
         private string GetTiedScore()
         {
