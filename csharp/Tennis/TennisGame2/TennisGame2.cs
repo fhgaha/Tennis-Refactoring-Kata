@@ -37,50 +37,41 @@ namespace Tennis
             {
                 return GetTiedScore();
             }
-
-            if (player1.Points > 0 
-                && player1.Points < 4 
-                && player2.Points == 0)
+            else if (player1.Points >= 4 || player2.Points >= 4)
             {
-                return scoreTerms[player1.Points] + "-Love";
+                if ((player1.Points - player2.Points) >= 2)
+                {
+                    return "Win for player1";
+                }
+
+                if ((player2.Points - player1.Points) >= 2)
+                {
+                    return "Win for player2";
+                }
+
+                if (player1.Points > player2.Points && player2.Points >= 3)
+                {
+                    return "Advantage player1";
+                }
+
+                if (player2.Points > player1.Points && player1.Points >= 3)
+                {
+                    return "Advantage player2";
+                }
             }
-
-            if (player2.Points > 0 
-                && player2.Points < 4 
-                && player1.Points == 0)
+            else if (player1.Points == 0 || player2.Points == 0)
             {
+                if (player1.Points > 0
+                && player1.Points < 4
+                && player2.Points == 0)
+                {
+                    return scoreTerms[player1.Points] + "-Love";
+                }
+
                 return "Love-" + scoreTerms[player2.Points];
             }
 
-            if (player1.Points > player2.Points && player1.Points < 4
-                || player2.Points > player1.Points && player2.Points < 4)
-            {
-                return scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
-            }
-
-            if (player1.Points >= 4 && player2.Points >= 0
-                && (player1.Points - player2.Points) >= 2)
-            {
-                return "Win for player1";
-            }
-
-            if (player2.Points >= 4 && player1.Points >= 0
-                && (player2.Points - player1.Points) >= 2)
-            {
-                return "Win for player2";
-            }
-
-            if (player1.Points > player2.Points && player2.Points >= 3)
-            {
-                return "Advantage player1";
-            }
-
-            if (player2.Points > player1.Points && player1.Points >= 3)
-            {
-                return "Advantage player2";
-            }
-
-            return "";
+            return scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
         }
 
         private string GetTiedScore()
