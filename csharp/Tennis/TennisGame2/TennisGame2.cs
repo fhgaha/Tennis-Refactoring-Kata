@@ -58,30 +58,7 @@ namespace Tennis
                 return "Advantage player2";
             }
 
-            return Other();
-        }
-
-        private string Other()
-        {
-            var score = "";
-
-            if (player1.HasZeroAndOpponentAhead(player2))
-            {
-                score = "Love-" + scoreTerms[player2.Points];
-            }
-
-            if (player2.HasZeroAndOpponentAhead(player1))
-            {
-                score = scoreTerms[player1.Points] + "-Love";
-            }
-
-            if (player1.AheadOfOpponentAndBelowFour(player2)
-                || player2.AheadOfOpponentAndBelowFour(player1))
-            {
-                score = scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
-            }
-
-            return score;
+            return scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
         }
 
         private string GetTiedScore()
