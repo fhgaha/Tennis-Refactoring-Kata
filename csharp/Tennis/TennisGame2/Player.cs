@@ -10,5 +10,10 @@ namespace Tennis.TennisGame2Folder
     {
         public string Name { get; set; }
         public int Points { get; set; }
+
+        public bool HasAdvantageOver(Player player2)
+        {
+            return Points > player2.Points && player2.Points >= 3;
+        }
     }
 }

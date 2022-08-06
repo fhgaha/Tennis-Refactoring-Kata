@@ -42,25 +42,25 @@ namespace Tennis
 
             if (player1.Points > 0 && player1.Points < 4 && player2.Points == 0)
             {
-                score = scoreTerms[player1.Points] + "-Love";
+                return scoreTerms[player1.Points] + "-Love";
             }
             if (player2.Points > 0 && player2.Points < 4 && player1.Points == 0)
             {
-                score = "Love-" + scoreTerms[player2.Points];
+                return "Love-" + scoreTerms[player2.Points];
             }
 
             if (player1.Points > player2.Points && player1.Points < 4
                 || player2.Points > player1.Points && player2.Points < 4)
             {
-                score = scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
+                return scoreTerms[player1.Points] + "-" + scoreTerms[player2.Points];
             }
 
-            if (player1.Points > player2.Points && player2.Points >= 3)
+            if (player1.HasAdvantageOver(player2))
             {
                 score = "Advantage player1";
             }
 
-            if (player2.Points > player1.Points && player1.Points >= 3)
+            if (player2.HasAdvantageOver(player1))
             {
                 score = "Advantage player2";
             }
@@ -76,6 +76,8 @@ namespace Tennis
 
             return score;
         }
+
+        
 
         private string GetTiedScore()
         {
