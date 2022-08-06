@@ -10,5 +10,15 @@ namespace Tennis.TennisGame3Folder
     {
         public string Name { get; set; }
         public int Points { get; set; }
+
+        public bool IsAheadByOnePointOf(Player opponent)
+        {
+            return (Points - opponent.Points) * (Points - opponent.Points) == 1;
+        }
+
+        public bool ScoredFourPoints()
+        {
+            return Points >= 4;
+        }
     }
 }

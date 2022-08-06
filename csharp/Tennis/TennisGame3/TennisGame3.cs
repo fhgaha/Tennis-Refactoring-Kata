@@ -7,28 +7,46 @@ namespace Tennis
         private Player player1;
         private Player player2;
 
+        private string[] terms = { "Love", "Fifteen", "Thirty", "Forty" };
+
         public TennisGame3(string player1Name, string player2Name)
         {
-            this.player1 = new Player { Name = player1Name };
-            this.player2 = new Player { Name = player2Name };
+            player1 = new Player { Name = player1Name };
+            player2 = new Player { Name = player2Name };
         }
 
         public string GetScore()
         {
-            string s;
-            if ((player1.Points < 4 && player2.Points < 4) && (player1.Points + player2.Points < 6))
+            if (!player1.ScoredFourPoints() 
+                && !player2.ScoredFourPoints() 
+                && !SixRoundsPlayed())
             {
-                string[] terms = { "Love", "Fifteen", "Thirty", "Forty" };
-                s = terms[player1.Points];
-                return (player1.Points == player2.Points) ? s + "-All" : s + "-" + terms[player2.Points];
+                return PlayersTied()
+                    ? terms[player1.Points] + "-All"
+                    : terms[player1.Points] + "-" + terms[player2.Points];
             }
-            else
+            else if (PlayersTied())
             {
-                if (player1.Points == player2.Points)
-                    return "Deuce";
-                s = player1.Points > player2.Points ? player1.Name : player2.Name;
-                return ((player1.Points - player2.Points) * (player1.Points - player2.Points) == 1) ? "Advantage " + s : "Win for " + s;
+                return "Deuce";
             }
+
+            var winningPlayer = player1.Points > player2.Points
+                ? player1.Name
+                : player2.Name;
+
+            return player1.IsAheadByOnePointOf(player2)
+                ? "Advantage " + winningPlayer
+                : "Win for " + winningPlayer;
+        }
+
+        private bool PlayersTied()
+        {
+            return player1.Points == player2.Points;
+        }
+
+        private bool SixRoundsPlayed()
+        {
+            return player1.Points + player2.Points >= 6;
         }
 
         public void WonPoint(string playerName)
